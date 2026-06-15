@@ -1,0 +1,6 @@
+{
+  "name": "Comprehensive Calculator Suite",
+  "description": "A comprehensive suite of instant, real-time calculators including mortgage, savings, compound interest, health indices, tax, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
