@@ -1162,5 +1162,89 @@ export const MORE_CALCULATORS: CalculatorSchema[] = [
       ]
     },
     relatedSlugs: ['percentage-calculator', 'unit-converter']
+  },
+
+  // 21. ISA TO IRP TAX REFUND CALCULATOR
+  {
+    title: 'ISA 3년 예치 후 IRP 이체 연말정산 환급금 계산기',
+    slug: 'isa-irp-tax-refund-calculator',
+    category: 'tax',
+    description: 'ISA(개인종합자산관리계좌) 3년 만기 후 IRP(개인형퇴직연금)로 이체할 경우, 연말정산에서 받을 수 있는 최대 세액공제 환급금을 연령·근로소득 기준으로 산정합니다.',
+    aliases: ['isa', 'irp', '연말정산', '세액공제', '개인연금', 'isa만기', 'irp이체', '퇴직연금', '세제혜택'],
+    inputs: [
+      { id: 'isaPrincipal', label: 'ISA 3년 예치 총 원금 (납입원금)', type: 'number', defaultValue: 18000000, unit: '원', unitPosition: 'suffix', section: 'ISA 만기 이체 정보' },
+      { id: 'isaProfit', label: 'ISA 3년 누적 수익금', type: 'number', defaultValue: 3600000, unit: '원', unitPosition: 'suffix', section: 'ISA 만기 이체 정보' },
+      { id: 'age', label: '현재 만 나이', type: 'select', defaultValue: 'under50', options: [{ label: '50세 미만', value: 'under50' }, { label: '50세 이상', value: 'over50' }], section: '세액공제 적용 조건' },
+      { id: 'taxBracket', label: '종합소득 과세표준 구간', type: 'select', defaultValue: '15', options: [{ label: '1,200만 원 이하 (6%)', value: '6' }, { label: '4,600만 원 이하 (15%)', value: '15' }, { label: '8,800만 원 이하 (24%)', value: '24' }, { label: '1.5억 원 이하 (35%)', value: '35' }, { label: '3억 원 이하 (38%)', value: '38' }, { label: '5억 원 이하 (40%)', value: '40' }, { label: '5억 원 초과 (45%)', value: '45' }], section: '세액공제 적용 조건' },
+      { id: 'hasOtherPension', label: '기타 연금저축/IRP 납입이 있는 경우', type: 'boolean', defaultValue: false, section: '기존 연금 납입 여부' },
+      { id: 'otherPensionAmount', label: '기존 연금저축/IRP 연간 납입액', type: 'number', defaultValue: 0, unit: '원', unitPosition: 'suffix', section: '기존 연금 납입 여부' }
+    ],
+    calculate: (inputs) => {
+      const isaPrincipal = Number(inputs.isaPrincipal) || 0;
+      const isaProfit = Number(inputs.isaProfit) || 0;
+      const isaTotal = isaPrincipal + isaProfit;
+      const age = inputs.age || 'under50';
+      const taxRate = (Number(inputs.taxBracket) || 15) / 100;
+      const hasOtherPension = !!inputs.hasOtherPension;
+      const otherPensionAmount = hasOtherPension ? (Number(inputs.otherPensionAmount) || 0) : 0;
+
+      // ISA 만기 수익은 비과세, 원금은 IRP 이체 가능
+      // IRP 연간 최대 납입 한도: 50세 미만 1,800만 원, 50세 이상 2,900만 원
+      const irpAnnualLimit = age === 'over50' ? 29000000 : 18000000;
+
+      // IRP로 이체 가능한 금액은 ISA 원금 전액 (수익은 분리 과세 후 인출 가능)
+      const transferablePrincipal = isaPrincipal;
+
+      // IRP 세액공제 가능액: 이체 원금과 한도 중 작은 값, 기존 납입액 차감
+      const remainingLimit = Math.max(0, irpAnnualLimit - otherPensionAmount);
+      const deductibleAmount = Math.min(transferablePrincipal, remainingLimit);
+
+      // IRP 세액공제율: 13.2%~16.5% (근로소득자는 세액공제 방식, 2026년 기준 13.2% 기본)
+      // 50세 이상은 추가 4.5%p (총 17.7%) - 실제로는 한도 내 900만 원 초과분 12% 등 복잡하나 단순화
+      const baseCreditRate = 0.132;
+      const ageBonusRate = age === 'over50' ? 0.045 : 0;
+      const creditRate = baseCreditRate + ageBonusRate;
+
+      // 세액공제금액 = 공제대상 납입액 × 공제율
+      const taxCredit = Math.round(deductibleAmount * creditRate);
+
+      // 비과세 혜택: ISA 수익금 비과세 (분리과세 9.9% 대비 절약)
+      const isaTaxSaved = Math.round(isaProfit * 0.099);
+
+      // 연말정산 환급 최대 금액 = IRP 세액공제 + ISA 비과세 절약
+      const totalRefund = taxCredit + isaTaxSaved;
+
+      const chartData = [
+        { name: 'IRP 세액공제 환급', value: taxCredit },
+        { name: 'ISA 수익 비과세 절약', value: isaTaxSaved }
+      ];
+
+      return {
+        results: [
+          { label: '연말정산 최대 예상 환급 총액', value: totalRefund, rawValue: totalRefund, displayType: 'currency', info: 'IRP 세액공제와 ISA 수익 비과세 혜택을 합산한 최대 절세 금액입니다.' },
+          { label: 'IRP 세액공제 환급액', value: taxCredit, rawValue: taxCredit, displayType: 'currency', info: `ISA 원금 중 IRP로 이체한 ${deductibleAmount.toLocaleString()}원에 대한 세액공제 금액입니다.` },
+          { label: 'ISA 수익 비과세 절약액', value: isaTaxSaved, rawValue: isaTaxSaved, displayType: 'currency', info: 'ISA 3년 만기 시 수익금에 대한 비과세 혜택으로 절약되는 세액입니다.' },
+          { label: 'IRP 연간 납입 한도', value: irpAnnualLimit, rawValue: irpAnnualLimit, displayType: 'currency' },
+          { label: 'IRP 공제 가능 이체 원금', value: deductibleAmount, rawValue: deductibleAmount, displayType: 'currency' },
+          { label: '적용 세액공제율', value: `${(creditRate * 100).toFixed(1)}%`, rawValue: creditRate * 100, displayType: 'text' }
+        ],
+        chartData
+      };
+    },
+    seoContent: {
+      guide: 'ISA 3년 예치 후 IRP로 이체하면 만기 수익은 비과세 혜택을 유지하고, 이체한 원금에 대해서는 연말정산 세액공제를 받을 수 있습니다. 50세 미만은 연 1,800만 원, 50세 이상은 연 2,900만 원 한도 내에서 공제받을 수 있습니다.',
+      formula: 'IRP 세액공제 = min(ISA 원금, IRP 연간 한도 - 기존 연금 납입액) × 세액공제율',
+      tips: [
+        'ISA는 3년 이상 유지해야 비과세 혜택을 받을 수 있으며, 중도 해지 시 수익금에 대한 분리과세가 적용됩니다.',
+        '50세 이상 가입자는 IRP 납입 한도가 2,900만 원으로 확대되며 추가 세액공제 혜택을 받을 수 있습니다.',
+        'ISA 수익금을 IRP로 이체할 수는 없으므로, 수익금은 인출 후 별도 연금저축/IRP로 재투자해야 추가 공제를 받을 수 있습니다.'
+      ],
+      faqs: [
+        { question: 'ISA 3년 후 IRP 이체가 무엇인가요?', answer: 'ISA 만기 시 원금을 IRP(개인형퇴직연금)로 옮기면, ISA 수익금에 대한 비과세 혜택을 유지하면서 이체한 원금에 대해 연말정산 세액공제를 받을 수 있는 절세 전략입니다.' },
+        { question: 'IRP 납입 한도는 얼마인가요?', answer: '2026년 기준 50세 미만은 연 1,800만 원, 50세 이상은 연 2,900만 원입니다. 다른 연금저축이나 IRP 납입액이 있다면 한도에서 차감됩니다.' },
+        { question: 'ISA 수익금도 IRP로 이체할 수 있나요?', answer: '아닙니다. ISA 수익금은 IRP로 이체할 수 없고, 만기 시 원금만 IRP로 이체 가능합니다. 수익금은 비과세로 인출하거나 별도 연금 계좌에 재투자해야 합니다.' }
+      ]
+    },
+    relatedSlugs: ['retirement-planner', 'compound-interest-calculator', 'net-salary-calculator']
   }
 ];

@@ -248,7 +248,7 @@ export default function CalculatorRenderer({ calculator }: CalculatorRendererPro
 
     switch (format) {
       case 'currency':
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+        return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW', maximumFractionDigits: 0 }).format(val);
       case 'percent':
         return `${val.toFixed(2)}%`;
       case 'number':

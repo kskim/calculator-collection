@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { ArrowUpRight, TrendingUp, Sparkles, Home, DollarSign, Activity, Percent } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, Sparkles, Home, Wallet, Activity, Percent } from 'lucide-react';
 import { CalculatorSchema } from '../types';
 import { renderLucideIcon } from './CategoryList';
 import { CATEGORIES } from '../data/calculators';

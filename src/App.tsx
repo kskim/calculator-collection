@@ -13,7 +13,6 @@ import {
   BookOpen,
   Maximize2,
   ArrowLeft,
-  DollarSign,
   HeartPulse,
   TrendingDown,
   Check,
@@ -175,7 +174,7 @@ export default function App() {
         description: '할인 가격, 할인 비율 할인, 세금 적용 후 결제해야 할 최종 실구매 비용을 편하게 정산합니다.',
         aliases: ['discount', 'sales tax', 'markdown coupon', '할인', '세일근', '쿠폰'],
         inputs: [
-          { id: 'originalPrice', label: '상품 판매 정가', type: 'number', defaultValue: 120, unit: '$', unitPosition: 'prefix', section: '매물 상세 및 가격' },
+          { id: 'originalPrice', label: '상품 판매 정가', type: 'number', defaultValue: 168000, unit: '원', unitPosition: 'suffix', section: '매물 상세 및 가격' },
           { id: 'discountRate', label: '할인 비율 (%)', type: 'range', defaultValue: 30, min: 5, max: 95, step: 5, unit: '%', unitPosition: 'suffix', section: '수치 값 입력 정보' },
           { id: 'salesTax', label: '추가할 지방 소비세 (%)', type: 'number', defaultValue: 8, unit: '%', unitPosition: 'suffix', section: '세금 및 부가 수수료' }
         ],
@@ -214,8 +213,8 @@ export default function App() {
         description: '매수 자동차의 월 이체료, 전체 할부 조율 원금 및 이자 누계 비율을 정밀 리포트합니다.',
         aliases: ['car loan', 'auto lease', 'vehicle tracker', '할부', '오토론', '차량대출'],
         inputs: [
-          { id: 'price', label: '차량 구매 원금 총액', type: 'number', defaultValue: 35000, unit: '$', unitPosition: 'prefix', section: '매물 상세 및 가격' },
-          { id: 'down', label: '선납 준비금 및 중고차 맞대환 가액', type: 'number', defaultValue: 5000, unit: '$', unitPosition: 'prefix', section: '매물 상세 및 가격' },
+          { id: 'price', label: '차량 구매 원금 총액', type: 'number', defaultValue: 49000000, unit: '원', unitPosition: 'suffix', section: '매물 상세 및 가격' },
+          { id: 'down', label: '선납 준비금 및 중고차 맞대환 가액', type: 'number', defaultValue: 7000000, unit: '원', unitPosition: 'suffix', section: '매물 상세 및 가격' },
           { id: 'rate', label: '할부 연간 적용 금리 (APR)', type: 'range', defaultValue: 5.5, min: 1, max: 15, step: 0.1, unit: '%', unitPosition: 'suffix', section: '대출 기본 조건' },
           { id: 'months', label: '할부 조달 연수 (개월수)', type: 'select', defaultValue: 60, options: [{ label: '36 개월 (3년)', value: 36 }, { label: '48 개월 (4년)', value: 48 }, { label: '60 개월 (5년)', value: 60 }, { label: '72 개월 (6년)', value: 72 }], section: '대출 기본 조건' }
         ],
@@ -262,7 +261,7 @@ export default function App() {
         description: '식당 빌 테이블 금액에 팁 배율을 얹은 다음, 참여 인원별로 1인 더치 비용을 균등 산정합니다.',
         aliases: ['split bill', 'restaurant tip share', 'dining split', '팁분할', '소수정산'],
         inputs: [
-          { id: 'totalBill', label: '총 테이블 오더 청구 영수액', type: 'number', defaultValue: 84.50, unit: '$', unitPosition: 'prefix', section: '일반 상세 항목' },
+          { id: 'totalBill', label: '총 테이블 오더 청구 영수액', type: 'number', defaultValue: 118300, unit: '원', unitPosition: 'suffix', section: '일반 상세 항목' },
           { id: 'tipRate', label: '희망 팁 부하율 (%)', type: 'range', defaultValue: 18, min: 10, max: 35, step: 1, unit: '%', unitPosition: 'suffix', section: '수치 값 입력 정보' },
           { id: 'people', label: '함께 식사한 동반 수 (명)', type: 'number', defaultValue: 3, unit: '명', unitPosition: 'suffix', section: '개인 세부 속성' }
         ],
@@ -300,11 +299,11 @@ export default function App() {
         description: '희망 소득 수준 대비 총부채상환비율(DSR) 및 주택감보인수비율(LTV) 규제를 가시화 분석합니다.',
         aliases: ['underwriting ltv', 'borrowing limits', 'dsr', 'LTV한도', '가계대출', '주택담보'],
         inputs: [
-          { id: 'income', label: '월 평균 세전 수입 세팅', type: 'number', defaultValue: 7500, unit: '$', unitPosition: 'prefix', section: '일반 상세 항목' },
-          { id: 'mortgagePayment', label: '예상 주택금융 월 원리금 청구액', type: 'number', defaultValue: 2100, unit: '$', unitPosition: 'prefix', section: '대출 기본 조건' },
-          { id: 'otherDebts', label: '타 월간 상환 부채 (학자금, 자동차 등)', type: 'number', defaultValue: 450, unit: '$', unitPosition: 'prefix', section: '대출 기본 조건' },
-          { id: 'homeVal', label: '매입 대상 주택 감정 가치', type: 'number', defaultValue: 350000, unit: '$', unitPosition: 'prefix', section: '매물 상세 및 가격' },
-          { id: 'loanAmt', label: '희망 주택대출 융자 신청액', type: 'number', defaultValue: 280000, unit: '$', unitPosition: 'prefix', section: '매물 상세 및 가격' }
+          { id: 'income', label: '월 평균 세전 수입 세팅', type: 'number', defaultValue: 10500000, unit: '원', unitPosition: 'suffix', section: '일반 상세 항목' },
+          { id: 'mortgagePayment', label: '예상 주택금융 월 원리금 청구액', type: 'number', defaultValue: 2940000, unit: '원', unitPosition: 'suffix', section: '대출 기본 조건' },
+          { id: 'otherDebts', label: '타 월간 상환 부채 (학자금, 자동차 등)', type: 'number', defaultValue: 630000, unit: '원', unitPosition: 'suffix', section: '대출 기본 조건' },
+          { id: 'homeVal', label: '매입 대상 주택 감정 가치', type: 'number', defaultValue: 490000000, unit: '원', unitPosition: 'suffix', section: '매물 상세 및 가격' },
+          { id: 'loanAmt', label: '희망 주택대출 융자 신청액', type: 'number', defaultValue: 392000000, unit: '원', unitPosition: 'suffix', section: '매물 상세 및 가격' }
         ],
         calculate: (ins) => {
           const inc = Math.max(1, Number(ins.income) || 1);
@@ -382,7 +381,7 @@ export default function App() {
       description: `특수 전용 공식과 목표 성률을 설정하기 전, 기하 복리 성장을 즉석에서 다차원 구현 연산해 봅니다.`,
       aliases: [],
       inputs: [
-        { id: 'baseAmount', label: '시작 기준 자산원금', type: 'number', defaultValue: 50000, unit: '$', unitPosition: 'prefix', section: '일반 상세 항목' },
+        { id: 'baseAmount', label: '시작 기준 자산원금', type: 'number', defaultValue: 70000000, unit: '원', unitPosition: 'suffix', section: '일반 상세 항목' },
         { id: 'interest', label: '목표 복리 변동성률 (%)', type: 'range', defaultValue: 5, min: 1, max: 20, step: 0.5, unit: '%', unitPosition: 'suffix', section: '수치 값 입력 정보' },
         { id: 'term', label: '유지할 계산 전개 주기 (연수/년)', type: 'range', defaultValue: 5, min: 1, max: 30, step: 1, unit: '년', unitPosition: 'suffix', section: '목표 투자 기간' }
       ],
@@ -575,20 +574,29 @@ export default function App() {
           /* SCENARIO B: MAIN HOME PAGE AND BROWSE LANDING DIRECTORY */
           <div id="main-landing-view" className="space-y-10 animate-in fade-in duration-300">
             {/* HERO HEADING CONTAINER AREA */}
-            <div id="homepage-hero-banner" className="text-center max-w-3xl mx-auto space-y-6 py-8 border-b-2 border-black bg-white p-6 md:p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black rounded-none">
+            <div id="homepage-hero-banner" className="text-center max-w-3xl mx-auto space-y-6 py-6 border-b-2 border-black bg-white p-5 md:p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] border-2 border-black rounded-none">
               <div className="inline-flex items-center gap-2 bg-orange-600 text-white text-[10px] font-black tracking-widest uppercase px-3.5 py-1.5 border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] mx-auto w-max select-none">
                 <Sparkles size={11} className="text-white fill-white animate-pulse" />
                 웹 최고의 원스톱 수학/실생활 지능 계산 시스템
               </div>
-              <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-black leading-none uppercase font-sans">
+              <h1 className="text-2xl md:text-4xl font-black tracking-tighter text-black leading-none uppercase font-sans">
                 인터넷에서 가장 풍부한 <br />
                 <span className="font-serif italic capitalize text-orange-600 lowercase inline-block py-1">
                   실시간 스마트 계산기
                 </span>
               </h1>
-              <p className="text-black/75 font-serif text-xs md:text-sm leading-relaxed max-w-2xl mx-auto italic">
+              <p className="text-black/75 font-serif text-xs md:text-xs leading-relaxed max-w-2xl mx-auto italic">
                 복잡한 전환이나 불필요한 새로고침 차단. 수억 명의 검색 수요를 관통하며, 오프라인으로 신뢰 가능하게 내장 공식 검증 및 궁금증 해결 안내를 일괄 제공합니다.
               </p>
+
+            {/* PROMO BANNER IMAGE */}
+            <div className="max-w-lg mx-auto border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden rounded-none bg-white">
+              <img
+                src="/hero-banner.png"
+                alt="홍보 배너"
+                className="w-full h-auto object-cover"
+              />
+            </div>
 
               {/* SEARCH AUTOSUGGEST DIRECTORY */}
               <SearchBar onSelectCalculator={handleLaunchCalculator} />

@@ -15,8 +15,8 @@ export interface CategoryInfo {
 }
 
 export const CATEGORIES: CategoryInfo[] = [
-  { id: 'finance', name: '금융', description: '대출, 복리 예적금, 이자율 및 자산 성장 계산기.', icon: 'DollarSign', count: 18 },
-  { id: 'tax', name: '세금', description: '소득세, 부가가치세, 원천징수 및 세액 공제 계산기.', icon: 'Percent', count: 12 },
+  { id: 'finance', name: '금융', description: '대출, 복리 예적금, 이자율 및 자산 성장 계산기.', icon: 'Wallet', count: 18 },
+  { id: 'tax', name: '세금', description: '소득세, 부가가치세, 원천징수, ISA/IRP 세액 공제 계산기.', icon: 'Percent', count: 13 },
   { id: 'salary', name: '급여/연봉', description: '실수령액 계산, 시급/일급 환산, 주휴수당 및 퇴직금 계산기.', icon: 'Briefcase', count: 8 },
   { id: 'investment', name: '투자', description: '주식 수익률, 배당금 재투자(DRIP), 투자 수익률(ROI), 가상자산 수익 계산기.', icon: 'TrendingUp', count: 15 },
   { id: 'retirement', name: '은퇴/파이어', description: '파이어족 은퇴 목표일 계산기, 노후 자산 규모 및 연금 수령금 계산기.', icon: 'Compass', count: 10 },
@@ -46,12 +46,12 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     popular: true,
     trending: true,
     inputs: [
-      { id: 'homeValue', label: '주택 가격', type: 'number', defaultValue: 400000, unit: '달러', unitPosition: 'suffix', section: '매물 상세 정보' },
-      { id: 'downPayment', label: '선납금 (자기 자산)', type: 'number', defaultValue: 80000, unit: '달러', unitPosition: 'suffix', section: '매물 상세 정보' },
+      { id: 'homeValue', label: '주택 가격', type: 'number', defaultValue: 560000000, unit: '원', unitPosition: 'suffix', section: '매물 상세 정보' },
+      { id: 'downPayment', label: '선납금 (자기 자산)', type: 'number', defaultValue: 112000000, unit: '원', unitPosition: 'suffix', section: '매물 상세 정보' },
       { id: 'interestRate', label: '연간 고정 금리 (이자율)', type: 'range', defaultValue: 6.5, min: 1, max: 15, step: 0.1, unit: '%', unitPosition: 'suffix', section: '대출 조건' },
       { id: 'loanTerm', label: '대출 만기 기간', type: 'select', defaultValue: 30, options: [{ label: '30년 만기', value: 30 }, { label: '20년 만기', value: 20 }, { label: '15년 만기', value: 15 }, { label: '10년 만기', value: 10 }], section: '대출 조건' },
       { id: 'propertyTax', label: '연간 기준 재산세율', type: 'number', defaultValue: 1.2, unit: '%', unitPosition: 'suffix', section: '세금 및 부가 비용' },
-      { id: 'homeInsurance', label: '연간 주택 종합 보험료', type: 'number', defaultValue: 1500, unit: '달러', unitPosition: 'suffix', section: '세금 및 부가 비용' }
+      { id: 'homeInsurance', label: '연간 주택 종합 보험료', type: 'number', defaultValue: 2100000, unit: '원', unitPosition: 'suffix', section: '세금 및 부가 비용' }
     ],
     calculate: (inputs) => {
       const homeValue = Number(inputs.homeValue) || 0;
@@ -125,7 +125,7 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
         '대출 실행 전에 개인 신용 점수를 충분히 관리해 두면 0.1%p 금리 인하만으로도 수천만 원의 이자 손실을 차단합니다.'
       ],
       faqs: [
-        { question: 'LTV(최대부담비율) 기준이란 무엇을 뜻합니까?', answer: '주택 자산 가격 대비 대출 가액 비율로, 일반적으로 가치가 40만 달러인 주택에 32만 달러를 대출 시 LTV는 80%가 됩니다.' },
+        { question: 'LTV(최대부담비율) 기준이란 무엇을 뜻합니까?', answer: '주택 자산 가격 대비 대출 가액 비율로, 일반적으로 가치가 5억 6천만 원인 주택에 4억 4천 8백만 원을 대출 시 LTV는 80%가 됩니다.' },
         { question: 'PITI 비용 구성은 어떤 의미인가요?', answer: '원금(Principal), 이자(Interest), 세금(Taxes), 보험료(Insurance)의 약어로, 매월 나가는 온전한 주거 금융 고정 지출 총계를 뜻합니다.' }
       ]
     },
@@ -142,8 +142,8 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     popular: true,
     trending: true,
     inputs: [
-      { id: 'initialDeposit', label: '초기 적립 예치금', type: 'number', defaultValue: 10000, unit: '달러', unitPosition: 'suffix', section: '초기 자산' },
-      { id: 'monthlyContribution', label: '매월 추가 불입 저축금', type: 'number', defaultValue: 500, unit: '달러', unitPosition: 'suffix', section: '정기 불입액' },
+      { id: 'initialDeposit', label: '초기 적립 예치금', type: 'number', defaultValue: 14000000, unit: '원', unitPosition: 'suffix', section: '초기 자산' },
+      { id: 'monthlyContribution', label: '매월 추가 불입 저축금', type: 'number', defaultValue: 700000, unit: '원', unitPosition: 'suffix', section: '정기 불입액' },
       { id: 'years', label: '목표 저축 기간 (연수)', type: 'range', defaultValue: 20, min: 1, max: 50, step: 1, unit: '년', unitPosition: 'suffix', section: '저축 기간' },
       { id: 'interestRate', label: '기대 연 목표 수익률 (이자율)', type: 'range', defaultValue: 8, min: 1, max: 20, step: 0.1, unit: '%', unitPosition: 'suffix', section: '이자 및 수익률' },
       { id: 'frequency', label: '복리 계산 주기 선택', type: 'select', defaultValue: 12, options: [{ label: '연 복리 (매년)', value: 1 }, { label: '분기 복리 (3개월)', value: 4 }, { label: '월 복리 (매월)', value: 12 }, { label: '일 복리 (매일)', value: 365 }], section: '이자 및 수익률' }
@@ -204,7 +204,7 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
       guide: '복리 계산기는 시간이 자본에 선사하는 강력한 기하 복리적 가치를 여실히 증명합니다. 단순한 정기 적금을 적립하는 데 그치지 않고, 전기 이자가 단번에 모 원금화 되어 계속 반복해 팽창하는 눈덩이 자산 스케줄을 손쉽게 도모해 보세요.',
       formula: '최종 복리 미래가치 = P(1 + r/n)^(nt) + PMT * [((1 + r/12)^(12t) - 1) / (r/12)] (매월 정기 적금 불입 기준)',
       tips: [
-        '소액이라도 빨리 투자를 시작해야 합니다. 20대에 시작한 100달러는 40대에 시작한 동일 원금 대비 만기 시 수 배 이상의 원금 증식을 유인합니다.',
+        '소액이라도 빨리 투자를 시작해야 합니다. 20대에 시작한 14만 원은 40대에 시작한 동일 원금 대비 만기 시 수 배 이상의 원금 증식을 유인합니다.',
         '복리 빈도 주기가 촘촘할수록(예: 년 이자 배분 대비 일 배분 방식) 눈덩이의 굴림 효율 속도가 미세하지만 좀 더 빠른 확증성을 보여줍니다.',
         '세금 혜택 및 연금 계좌의 과세이연 효과를 결함하면 도중 소모되는 세이프 마진을 극도로 보존하여 복리를 극대화시킵니다.'
       ],
@@ -227,10 +227,10 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     trending: true,
     inputs: [
       { id: 'age', label: '현재 생물학적 나이', type: 'number', defaultValue: 30, unit: '세', unitPosition: 'suffix', section: '사용자 통계 데이터' },
-      { id: 'targetNetWorth', label: '은퇴 직후 연간 희망 생활비', type: 'number', defaultValue: 60000, unit: '달러', unitPosition: 'suffix', section: '은퇴 연령 및 예산' },
+      { id: 'targetNetWorth', label: '은퇴 직후 연간 희망 생활비', type: 'number', defaultValue: 84000000, unit: '원', unitPosition: 'suffix', section: '은퇴 연령 및 예산' },
       { id: 'safeWithdrawalRate', label: '포트폴리오 안전 인출률 (SWR)', type: 'range', defaultValue: 4, min: 2, max: 6, step: 0.1, unit: '%', unitPosition: 'suffix', section: '은퇴 연령 및 예산' },
-      { id: 'currentNetWorth', label: '현재 가용 저축 및 실투자 자산액', type: 'number', defaultValue: 50000, unit: '달러', unitPosition: 'suffix', section: '자산 보존 상태' },
-      { id: 'annualSavings', label: '연간 경제활동 순 저축 추가액', type: 'number', defaultValue: 24000, unit: '달러', unitPosition: 'suffix', section: '자산 보존 상태' },
+      { id: 'currentNetWorth', label: '현재 가용 저축 및 실투자 자산액', type: 'number', defaultValue: 70000000, unit: '원', unitPosition: 'suffix', section: '자산 보존 상태' },
+      { id: 'annualSavings', label: '연간 경제활동 순 저축 추가액', type: 'number', defaultValue: 33600000, unit: '원', unitPosition: 'suffix', section: '자산 보존 상태' },
       { id: 'expectedGrowth', label: '예상 투자 실질 수익률 (인플레 차감)', type: 'range', defaultValue: 7, min: 2, max: 12, step: 0.5, unit: '%', unitPosition: 'suffix', section: '기대 금융 성과' }
     ],
     calculate: (inputs) => {
@@ -292,7 +292,7 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
       ],
       faqs: [
         { question: '트리니티 안전 인출 연구란 무엇인가요?', answer: '주식과 채권 포트폴리오 자산에서 연 4%의 물가 반영 자금을 인출해도, 30개년 이상 고갈되지 않는 최적 안정을 역사적 실증한 텍사스 주립 은퇴 자산 실험 논문입니다.' },
-        { question: '린 파이어(Lean) vs 팻 파이어(Fat)의 지향점 차이가 있습니까?', answer: '린 파이어는 극단적으로 최소화 사일로 지출(<연 4만 달러 유지)을 기반으로 압축 은퇴를 도모하며, 팻 파이어는 다각도 고급 레저 향유 및 넉넉한 비용 규모(>연 10만 달러 타겟)의 풍요한 자립 목적을 구축합니다.' }
+        { question: '린 파이어(Lean) vs 팻 파이어(Fat)의 지향점 차이가 있습니까?', answer: '린 파이어는 극단적으로 최소화 사일로 지출(<연 5천 6백만 원 유지)을 기반으로 압축 은퇴를 도모하며, 팻 파이어는 다각도 고급 레저 향유 및 넉넉한 비용 규모(>연 1억 4천만 원 타겟)의 풍요한 자립 목적을 구축합니다.' }
       ]
     },
     relatedSlugs: ['compound-interest-calculator', 'net-salary-calculator', 'rent-vs-buy-calculator']
@@ -308,10 +308,10 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     popular: true,
     trending: false,
     inputs: [
-      { id: 'grossIncome', label: '세전 연봉 (기본급 연차수당 포함)', type: 'number', defaultValue: 85000, unit: '달러', unitPosition: 'suffix', section: '기본 급여 정보' },
+      { id: 'grossIncome', label: '세전 연봉 (기본급 연차수당 포함)', type: 'number', defaultValue: 119000000, unit: '원', unitPosition: 'suffix', section: '기본 급여 정보' },
       { id: 'filingStatus', label: '가구 인적 공제 방식', type: 'select', defaultValue: 'single', options: [{ label: '단독 가구(독립 세대)', value: 'single' }, { label: '부부 합산 세대 구성 (배우자 포함)', value: 'joint' }], section: '공제 신청 여건' },
       { id: 'stateTaxRate', label: '소득 지역 지방 세액 공제율 (안내 주민세 포함)', type: 'range', defaultValue: 4.5, min: 0, max: 13, step: 0.1, unit: '%', unitPosition: 'suffix', section: '원천 세율 기준' },
-      { id: 'preTaxDeductions', label: '연간 세전 선공제액 (퇴직 적금, 청약 401k 등)', type: 'number', defaultValue: 6000, unit: '달러', unitPosition: 'suffix', section: '주요 비과세 및 선공제' }
+      { id: 'preTaxDeductions', label: '연간 세전 선공제액 (퇴직 적금, 청약 401k 등)', type: 'number', defaultValue: 8400000, unit: '원', unitPosition: 'suffix', section: '주요 비과세 및 선공제' }
     ],
     calculate: (inputs) => {
       const gross = Number(inputs.grossIncome) || 0;
@@ -536,7 +536,7 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     popular: true,
     trending: false,
     inputs: [
-      { id: 'hourlyRate', label: '나의 현재 적용 시급', type: 'number', defaultValue: 25, unit: '달러', unitPosition: 'suffix', section: '요율 기준 설정' },
+      { id: 'hourlyRate', label: '나의 현재 적용 시급', type: 'number', defaultValue: 35000, unit: '원', unitPosition: 'suffix', section: '요율 기준 설정' },
       { id: 'hoursPerWeek', label: '주당 평균 실제 노동 시간 조건', type: 'range', defaultValue: 40, min: 1, max: 80, step: 1, unit: '시간', unitPosition: 'suffix', section: '요율 기준 설정' },
       { id: 'paidWeeks', label: '연간 유급 보상 저축 주수 (기본 1년)', type: 'number', defaultValue: 52, unit: '주', unitPosition: 'suffix', section: '시간 요건 세약' }
     ],
@@ -566,7 +566,7 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
       formula: '연봉 총 환산액 = 지정 시급 * 주간 실 일 노동 시간 (통상 40시간) * 1년 유급 주수 (기본 52주)',
       tips: [
         '프리랜서 및 단기 임시 직군(3.3% 원천세 혹은 개인 사업자)은 회사 지원 4대 보험 분담 및 주휴 수수료 보너스 손실액을 고려하여, 일반 회사 임금 대비 약 15~20% 더 높은 시급 요율을 주장하는 것이 논리적입니다.',
-        '쉽고 빠른 환산 비결로 시급 요율값에 2,000배를 곱하면, 주 40시간 근무 직원의 대략적인 연봉 총액 규모와 가깝게 수렴합니다 (예: 40달러 시급 시 연봉 8만 달러 상당).',
+        '쉽고 빠른 환산 비결로 시급 요율값에 2,000배를 곱하면, 주 40시간 근무 직원의 대략적인 연봉 총액 규모와 가깝게 수렴합니다 (예: 4만 원 시급 시 연봉 1억 1,200만 원 상당).',
         '법정 야간 및 휴일 추가 가산 수당 가중치를 확인해 연평균 불입 연산에 직접 대조 적용해 보세요.'
       ],
       faqs: [
@@ -636,11 +636,11 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     popular: false,
     trending: false,
     inputs: [
-      { id: 'principal', label: '주식 초기 배정 매수 원금', type: 'number', defaultValue: 15000, unit: '달러', unitPosition: 'suffix', section: '자산 기본 설정' },
+      { id: 'principal', label: '주식 초기 배정 매수 원금', type: 'number', defaultValue: 21000000, unit: '원', unitPosition: 'suffix', section: '자산 기본 설정' },
       { id: 'dividendYield', label: '연 기대 주당 기본 배당 수익률 %', type: 'range', defaultValue: 4.2, min: 1, max: 15, step: 0.1, unit: '%', unitPosition: 'suffix', section: '배당 세부 요건' },
       { id: 'annualChange', label: '기대 장기 연간 주가 비례 가치 향상율 % (주가 성장률)', type: 'range', defaultValue: 6, min: -2, max: 15, step: 0.5, unit: '%', unitPosition: 'suffix', section: '주가 및 성장 전망' },
       { id: 'years', label: '자산 보유 holding 유지 년차', type: 'range', defaultValue: 20, min: 1, max: 40, step: 1, unit: '년', unitPosition: 'suffix', section: '보유 연수' },
-      { id: 'annualAddition', label: '매년 추가 조달 불입 외화 저축 투자액', type: 'number', defaultValue: 3000, unit: '달러', unitPosition: 'suffix', section: '주가 및 성장 전망' }
+      { id: 'annualAddition', label: '매년 추가 조달 불입 외화 저축 투자액', type: 'number', defaultValue: 4200000, unit: '원', unitPosition: 'suffix', section: '주가 및 성장 전망' }
     ],
     calculate: (inputs) => {
       const p = Number(inputs.principal) || 0;
@@ -761,9 +761,9 @@ const BASE_CALCULATORS: CalculatorSchema[] = [
     popular: false,
     trending: false,
     inputs: [
-      { id: 'principal', label: '초기 예금 예치 원금', type: 'number', defaultValue: 10000, unit: '달러', unitPosition: 'suffix', section: '목돈 예치 조건' },
+      { id: 'principal', label: '초기 예금 예치 원금', type: 'number', defaultValue: 14000000, unit: '원', unitPosition: 'suffix', section: '목돈 예치 조건' },
       { id: 'apy', label: '금리 요율 (우대 APY 이율 연도 기준)', type: 'range', defaultValue: 4.5, min: 0.5, max: 7, step: 0.1, unit: '%', unitPosition: 'suffix', section: '우대 금리 가산' },
-      { id: 'monthlyAdd', label: '매월 추가 불입 저축금액', type: 'number', defaultValue: 250, unit: '달러', unitPosition: 'suffix', section: '우대 금리 가산' },
+      { id: 'monthlyAdd', label: '매월 추가 불입 저축금액', type: 'number', defaultValue: 350000, unit: '원', unitPosition: 'suffix', section: '우대 금리 가산' },
       { id: 'years', label: '예치 계획 유지 년수 (중단 보유 기간)', type: 'range', defaultValue: 10, min: 1, max: 30, step: 1, unit: '년', unitPosition: 'suffix', section: '보존 연도 범위' }
     ],
     calculate: (inputs) => {
